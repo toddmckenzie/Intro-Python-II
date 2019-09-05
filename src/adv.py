@@ -4,21 +4,22 @@ from player import Player
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons",
+                     ["hammer", "old map"]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", ["lamp", "walking stick"]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", ["book", "sword"]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", ["flashlight", "bell"]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", ["Note: Sorry I took the gold", "donut"]),
 }
 
 
@@ -59,34 +60,53 @@ flag = True
 while flag == True:
     for i in room:
         if i == player.currentRoom:
+            print("\n")
             print(room[i].name)
+            print("\n")
             print(room[i].description)
-            move = input("Would you like to move n, s, e, w?")
+            print("\n")
+            if len(player.items) > 1:
+                print("You have a " + player.items[0] + " and a " + player.items[1])
+            if len(player.items) == 1:
+                print("You have a " + player.items[0])
+            print("On the ground is a " + room[i].items[0] + " and a " + room[i].items[1])
+            print("\n")  
+            pickup = input("\nWould you like to pick up " + room[i].items[0] + " or the " + room[i].items[1] + "? If so type in the name of the item you wish to pickup.")
+            
+            if pickup == room[i].items[0] or pickup == room[i].items[1]:
+                if len(player.items) == 2:
+                    drop = input("would you like to drop " + player.items[0] + " or " + player.items[1] + "?")
+                    if drop == player.items[0] or drop == player.items[1]:
+                        player.dropItem(drop)
+                        room[i].addItem(drop)
+                player.addItem(pickup)
+            #getattr 
+            move = input("\n\nWould you like to move n, s, e, w?")
             if move == 'q' or move == 'quit':
                 flag = False
             elif move == 'n':
                 if hasattr(room[i], "n_to"):
                     player.changeRoom(room[i].n_to)
                 else:
-                    print("Pick another direction. You can't go here.")
+                    print("\n\n\nPick another direction. You can't go here.\n\n\n")
                     move
             elif move == 's':
                 if hasattr(room[i], "s_to"):
                     player.changeRoom(room[i].s_to)
                 else:
-                    print("Pick another direction. You can't go here.")
+                    print("\n\n\nPick another direction. You can't go here.\n\n\n")
                     move
             elif move == 'e':
                 if hasattr(room[i], "e_to"):
                     player.changeRoom(room[i].e_to)
                 else:
-                    print("Pick another direction. You can't go here.")
+                    print("\n\n\nPick another direction. You can't go here.\n\n\n")
                     move
             elif move == 'w':
                 if hasattr(room[i], "w_to" ):
                     player.changeRoom(room[i].w_to)
                 else:
-                    print("Pick another direction. You can't go here.")
+                    print("\n\n\nPick another direction. You can't go here.\n\n\n")
                     move
 
 # * Prints the current room name // 
