@@ -24,14 +24,14 @@ earlier adventurers. The only exit is to the south."""),
 
 # Link rooms together
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+# room['outside'].n_to = room['foyer']
+# room['foyer'].s_to = room['outside']
+# room['foyer'].n_to = room['overlook']
+# room['foyer'].e_to = room['narrow']
+# room['overlook'].s_to = room['foyer']
+# room['narrow'].w_to = room['foyer']
+# room['narrow'].n_to = room['treasure']
+# room['treasure'].s_to = room['narrow']
 
 #
 # Main
@@ -45,6 +45,8 @@ room['overlook'].s_to = 'foyer'
 room['narrow'].w_to = 'foyer'
 room['narrow'].n_to = 'treasure'
 room['treasure'].s_to = 'narrow'
+
+
 # Make a new player object that is currently in the 'outside' room.
 
 player = Player("outside")
@@ -63,13 +65,30 @@ while flag == True:
             if move == 'q' or move == 'quit':
                 flag = False
             elif move == 'n':
-                player.changeRoom(room[i].n_to)
+                if hasattr(room[i], "n_to"):
+                    player.changeRoom(room[i].n_to)
+                else:
+                    print("Pick another direction. You can't go here.")
+                    move
             elif move == 's':
-                player.changeRoom(room[i].s_to)
+                if hasattr(room[i], "s_to"):
+                    player.changeRoom(room[i].s_to)
+                else:
+                    print("Pick another direction. You can't go here.")
+                    move
             elif move == 'e':
-                player.changeRoom(room[i].e_to)
+                if hasattr(room[i], "e_to"):
+                    player.changeRoom(room[i].e_to)
+                else:
+                    print("Pick another direction. You can't go here.")
+                    move
             elif move == 'w':
-                player.changeRoom(room[i].w_to)
+                if hasattr(room[i], "w_to" ):
+                    player.changeRoom(room[i].w_to)
+                else:
+                    print("Pick another direction. You can't go here.")
+                    move
+
 # * Prints the current room name // 
 # * Prints the current description (the textwrap module might be useful here). // 
 # * Waits for user input and decides what to do.
