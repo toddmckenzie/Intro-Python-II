@@ -2,10 +2,9 @@
 # currently.
 
 class Player(): 
-    def __init__(self, currentRoom)
+    def __init__(self, currentRoom):
         self.currentRoom = currentRoom
     
     def __str__(self):
-        return ("current room is: "  self.currentRoom)
-
+        return ("Current room is: " + self.currentRoom)
         
