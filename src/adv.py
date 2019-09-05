@@ -37,10 +37,18 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+room['outside'].n_to = 'foyer'
+room['foyer'].s_to = 'outside'
+room['foyer'].n_to = 'overlook'
+room['foyer'].e_to = 'narrow'
+room['overlook'].s_to = 'foyer'
+room['narrow'].w_to = 'foyer'
+room['narrow'].n_to = 'treasure'
+room['treasure'].s_to = 'narrow'
 # Make a new player object that is currently in the 'outside' room.
 
 player = Player("outside")
-print(room['outside'].n_to)
+
 # player = Player("treasure")
 # Write a loop that:
 #
@@ -55,13 +63,13 @@ while flag == True:
             if move == 'q' or move == 'quit':
                 flag = False
             elif move == 'n':
-                player = Player(room[i].n_to)
+                player.changeRoom(room[i].n_to)
             elif move == 's':
-                player = Player(room[i].s_to)
+                player.changeRoom(room[i].s_to)
             elif move == 'e':
-                player = Player(room[i].e_to)
+                player.changeRoom(room[i].e_to)
             elif move == 'w':
-                player = Player(room[i].w_to)
+                player.changeRoom(room[i].w_to)
 # * Prints the current room name // 
 # * Prints the current description (the textwrap module might be useful here). // 
 # * Waits for user input and decides what to do.
@@ -70,3 +78,6 @@ while flag == True:
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+# to change room call player.changeRoom(newRoom)
