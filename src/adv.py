@@ -69,17 +69,37 @@ while flag == True:
                 print("You have a " + player.items[0] + " and a " + player.items[1])
             if len(player.items) == 1:
                 print("You have a " + player.items[0])
-            print("On the ground is a " + room[i].items[0] + " and a " + room[i].items[1])
+            if len(room[i].items) == 2:
+                print("On the ground is a " + room[i].items[0] + " and a " + room[i].items[1])
+            if len(room[i].items) == 1:
+                 print("On the ground is a " + room[i].items[0])
             print("\n")  
-            pickup = input("\nWould you like to pick up " + room[i].items[0] + " or the " + room[i].items[1] + "? If so type in the name of the item you wish to pickup.")
+            if len(room[i].items) == 2:
+                pickup = input("\nWould you like to pick up " + room[i].items[0] + " or the " + room[i].items[1] + "? If so type in the name of the item you wish to pickup.")
+            if len(room[i].items) == 1:
+                pickup = input("\nWould you like to pick up " + room[i].items[0] + "? If so type in the name of the item you wish to pickup.")
+            if len(room[i].items) == 2:
+                if pickup == room[i].items[0] or pickup == room[i].items[1]:
+                    if len(player.items) == 2:
+                        drop = input("would you like to drop " + player.items[0] + " or " + player.items[1] + "?")
+                        if drop == player.items[0] or drop == player.items[1]:
+                            player.dropItem(drop)
+                            room[i].addItem(drop)
+            else:
+                if pickup == room[i].items[0]:
+                    if len(player.items) == 2:
+                        drop = input("would you like to drop " + player.items[0] + " or " + player.items[1] + "?")
+                        if drop == player.items[0] or drop == player.items[1]:
+                            player.dropItem(drop)
+                            room[i].addItem(drop)
             
-            if pickup == room[i].items[0] or pickup == room[i].items[1]:
-                if len(player.items) == 2:
-                    drop = input("would you like to drop " + player.items[0] + " or " + player.items[1] + "?")
-                    if drop == player.items[0] or drop == player.items[1]:
-                        player.dropItem(drop)
-                        room[i].addItem(drop)
-                player.addItem(pickup)
+            if pickup != '':
+                if len(room[i].items) == 1 and pickup == room[i].items[0]:
+                    player.addItem(pickup)
+                    room[i].dropItem(pickup)
+                elif len(room[i].items) == 2 and pickup == room[i].items[0] or pickup == room[i].items[1]:
+                    player.addItem(pickup)
+                    room[i].dropItem(pickup)
             #getattr 
             move = input("\n\nWould you like to move n, s, e, w?")
             if move == 'q' or move == 'quit':
