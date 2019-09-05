@@ -85,6 +85,8 @@ while flag == True:
                         if drop == player.items[0] or drop == player.items[1]:
                             player.dropItem(drop)
                             room[i].addItem(drop)
+            elif len(room[i].items) == 0:
+                pass
             else:
                 if pickup == room[i].items[0]:
                     if len(player.items) == 2:
@@ -97,9 +99,10 @@ while flag == True:
                 if len(room[i].items) == 1 and pickup == room[i].items[0]:
                     player.addItem(pickup)
                     room[i].dropItem(pickup)
-                elif len(room[i].items) == 2 and pickup == room[i].items[0] or pickup == room[i].items[1]:
-                    player.addItem(pickup)
-                    room[i].dropItem(pickup)
+                elif len(room[i].items) == 2:
+                    if pickup == room[i].items[0] or pickup == room[i].items[1]:
+                        player.addItem(pickup)
+                        room[i].dropItem(pickup)
             #getattr 
             move = input("\n\nWould you like to move n, s, e, w?")
             if move == 'q' or move == 'quit':
